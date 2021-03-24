@@ -220,9 +220,11 @@ public class GamePanel extends JPanel implements Runnable {
 
     private void loadMap() {
 
+        BufferedReader bufferedReader = null;
+
         try {
             InputStream input = getClass().getResourceAsStream("/res/maps/map.txt");
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input));
+            bufferedReader = new BufferedReader(new InputStreamReader(input));
             String row;
             int i = 0;
 
@@ -240,9 +242,17 @@ public class GamePanel extends JPanel implements Runnable {
                 }
                 i++;
             }
-
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (bufferedReader != null) {
+                    bufferedReader.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
